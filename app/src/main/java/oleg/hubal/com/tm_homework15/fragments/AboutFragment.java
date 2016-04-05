@@ -1,6 +1,7 @@
 package oleg.hubal.com.tm_homework15.fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,31 +28,45 @@ public class AboutFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_about, container, false);
 
         initViews();
+
         setText();
 
         return view;
     }
 
     private void setText() {
-        StringBuilder sb = new StringBuilder();
-        InputStream inputStream = getResources().openRawResource(R.raw.about_info);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-        String line;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                StringBuilder sb = new StringBuilder();
+                InputStream inputStream = getResources().openRawResource(R.raw.about_info);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                String line;
 
-        try {
-            try {
-                line = reader.readLine();
-                while (line != null) {
-                    sb.append(line);
-                    line = reader.readLine();
+                try {
+                    try {
+                        line = reader.readLine();
+                        while (line != null) {
+                            sb.append(line);
+                            line = reader.readLine();
+                        }
+                    } finally {
+                        reader.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            } finally {
-                reader.close();
+
+                final String text = sb.toString();
+
+                aboutText.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        aboutText.setText(text);
+                    }
+                });
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        aboutText.setText(sb.toString());
+        }).start();
     }
 
     private void initViews() {
