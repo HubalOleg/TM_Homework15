@@ -24,7 +24,6 @@ public class RegFragment extends Fragment implements View.OnClickListener {
 
     private View view;
     private EditText etLogin, etPassword, etName, etSurname;
-    private RadioGroup radioGroup;
     private Button btnCreate;
     private String login, password, name, surname;
     private DatabaseHeadlessFragment dbFragment;
@@ -101,5 +100,10 @@ public class RegFragment extends Fragment implements View.OnClickListener {
         password = etPassword.getText().toString();
         name = etName.getText().toString();
         surname = etSurname.getText().toString();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

@@ -20,4 +20,5 @@
     <string name="btn_preference">Open settings</string>
     <string name="btn_about">Show text (About)</string>
     <string name="save_settings">Save settings</string>
+    <string name="addition">Проблема: чомусь список показується тільки після 2-го відкиття фрагменту Show Users + база данних записується тільки після закриття апки</string>
 </resources>
